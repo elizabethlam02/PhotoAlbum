@@ -1,2 +1,4 @@
 # PhotoAlbum
-This is an PhotoAlbum assignment created using JavaFX
+# Elizabeth Lam
+# Himani Patel
+This is a Photo Album program which stores photos in albums using a user file system.
