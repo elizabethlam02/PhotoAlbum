@@ -17,6 +17,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextInputDialog;
 import javafx.scene.image.Image;
@@ -24,6 +25,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.control.Alert.AlertType;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
+import javafx.util.Callback;
 import model.*;
 
 /**
@@ -80,9 +82,22 @@ public class SearchResultsController implements LogOutController {
 		*/
 		//obsList = FXCollections.observableArrayList(names);
 		obsList = FXCollections.observableArrayList(this.photolist);
+		
 		searchResults.setItems(obsList);
+		
+		searchResults.setCellFactory(new Callback<ListView<Photo>, ListCell<Photo>>() {
+			@Override
+			public Cell call(ListView<Photo> listView) {
+				return new Cell();
+			}
+		}
+				);
+		
+		//select the first item
+	
 
-
+		
+		//set listener
 		searchResults.getSelectionModel().selectedIndexProperty().addListener(
 				(obs, oldVal, newVal) -> 
 				//showItem(mainStage)
@@ -94,19 +109,22 @@ public class SearchResultsController implements LogOutController {
 						e.printStackTrace();
 					}
 				}
-		);
+				);
+		
 		searchResults.getSelectionModel().select(0);
 		
-		stage.getScene().getWindow().addEventFilter(WindowEvent.WINDOW_CLOSE_REQUEST, arg0 -> {
-			try {
-				closeWindowEvent(arg0);
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		});
+				stage.getScene().getWindow().addEventFilter(WindowEvent.WINDOW_CLOSE_REQUEST, arg0 -> {
+					try {
+						closeWindowEvent(arg0);
+					} catch (IOException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				});
 
+		
 	}
+
 	private void closeWindowEvent(WindowEvent event) throws IOException {
 		Admin.save(Photos.driver);
 	}
@@ -118,6 +136,7 @@ public class SearchResultsController implements LogOutController {
 	 */
 	public void showItem(Stage stage) throws FileNotFoundException {
 		Photo currPhoto = searchResults.getSelectionModel().getSelectedItem();
+		/*
 		if (currPhoto == null) {
 			photo.setImage(null);
 			//photoCaption.setText(null);
@@ -128,6 +147,7 @@ public class SearchResultsController implements LogOutController {
 			Image image = new Image(stream);
 			photo.setImage(image);
 		}
+		*/
 	}
 	
 	/**
