@@ -5,19 +5,20 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.SlideshowController">
    <children>
-      <Button fx:id="back" layoutX="14.0" layoutY="170.0" mnemonicParsing="false" prefHeight="60.0" prefWidth="75.0" text="&lt;">
+      <Button fx:id="back" layoutX="14.0" layoutY="170.0" mnemonicParsing="false" onAction="#backAction" prefHeight="60.0" prefWidth="75.0" text="&lt;">
          <font>
             <Font size="36.0" />
          </font>
       </Button>
-      <Button fx:id="forward" layoutX="510.0" layoutY="170.0" mnemonicParsing="false" prefHeight="60.0" prefWidth="75.0" text="&gt;">
+      <Button fx:id="forward" layoutX="510.0" layoutY="170.0" mnemonicParsing="false" onAction="#forwardAction" prefHeight="60.0" prefWidth="75.0" text="&gt;">
          <font>
             <Font size="36.0" />
          </font>
       </Button>
       <ImageView fx:id="currImage" fitHeight="379.0" fitWidth="398.0" layoutX="100.0" layoutY="7.0" pickOnBounds="true" preserveRatio="true" />
+      <Button fx:id="logout" layoutX="532.0" layoutY="360.0" mnemonicParsing="false" onAction="#logOut" text="logout" />
+      <Button fx:id="backStage" layoutX="472.0" layoutY="360.0" mnemonicParsing="false" onAction="#backStageAction" text="back" />
    </children>
 </AnchorPane>

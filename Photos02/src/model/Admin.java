@@ -1,7 +1,7 @@
 package model;
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
+
+import java.io.*;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
@@ -9,8 +9,7 @@ import java.io.Serializable;
 import java.util.*;
 
 /**
- * 
- * 
+ * This class store methods used by the Admin user
  * @author Himani Patel
  * @author Elizabeth Lam
  *
@@ -18,8 +17,9 @@ import java.util.*;
 
 public class Admin implements Serializable{
 	
+	
 	/**
-	 * Serialiable Interface used to store User Data
+	 * Serializable Interface used to store User Data
 	 */
 	private static final long serialVersionUID = 1L;
 	public static final String storeDir = "dat";
@@ -29,14 +29,16 @@ public class Admin implements Serializable{
 	 * Current User
 	 */
 	public static User currentUser;
-	/**
-	 * Is the user logged in
-	 */
-	public boolean userOn;
+	
+	//public boolean userOn;
 	/**
 	 * List of users
 	 */
 	public ArrayList<User> users; 
+	/**
+	 * returns true if stock files are already added
+	 */
+	public boolean stockAdded = false;
 	
 	/**
 	 *Singleton instance of admin
@@ -47,11 +49,9 @@ public class Admin implements Serializable{
 	 */
 	public Admin(){
 		users = new ArrayList<User>();
-		users.add(new User("Admin"));
-		// added code
-		users.add(new User("bitch"));
+		users.add(new User("stock"));
 		currentUser = null;
-		userOn = false;
+		//userOn = false;
 		
 	}
 	/**
@@ -83,7 +83,7 @@ public class Admin implements Serializable{
 	 */
 	public void deleteUser(String username) {
 		for (User u: users) {
-			if(u.username.equals(username)) {
+			if(u.getUsername().equalsIgnoreCase(username)) {
 				int index = users.indexOf(u);
 				users.remove(index);
 			}
@@ -97,19 +97,14 @@ public class Admin implements Serializable{
 		users.remove(index);
 	}
 	/**
-	 * gets User by username
-	 * @param username
-	 */
-	/**
 	 * checks if a User exists with the same name
 	 * @param name
 	 * @return
 	 */
 	public boolean userExists(String name) {
-		name = name.toLowerCase();
 		for (User u: users) {
 			//System.out.println(u.username);
-			if (u.username.toLowerCase().equals(name)) {
+			if (u.getUsername().equalsIgnoreCase(name)) {
 				return true;
 			}
 		}
@@ -123,11 +118,11 @@ public class Admin implements Serializable{
 	 */
 	public User getUser(String username) {
 		for (User u: users) {
-			if(u.username.equals(username)) {
+			if(u.getUsername().equals(username)) {
 				return u;
 			}
 		}
-		return null;		
+		return null;
 	}
 	/**
 	 * gets User by index
@@ -148,14 +143,11 @@ public class Admin implements Serializable{
 	 * @param current
 	 */
 	public void setCurrent(User current) {
-		this.currentUser = current;
+		Admin.currentUser = current;
 		//System.out.println("True");
 	}
-	/**
-	 * Checks if the User exists and logs the user on
-	 * @param username
-	 * @return
-	 */
+
+	/*
 	public boolean checkUser(String username) {
 		int index = -1;
 		for(int i = 0; i < users.size(); i++) {
@@ -170,15 +162,26 @@ public class Admin implements Serializable{
 			return true;
 		
 		}
-
 		return false;
 		
 	}
-	public static void save(Admin uApp) throws IOException {
+	*/
+	/**
+	 * Used to store data of the Admin instance
+	 * @param Adapp
+	 * @throws IOException
+	 */
+	public static void save(Admin Adapp) throws IOException {
 		ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(storeDir + File.separator + storeFile));
-		oos.writeObject(uApp);
+		oos.writeObject(Adapp);
 		oos.close();
 	}
+	/**
+	 * Used to load data for the Admin instance
+	 * @return
+	 * @throws IOException
+	 * @throws ClassNotFoundException
+	 */
 	public static Admin load() throws IOException, ClassNotFoundException {
 		ObjectInputStream ois = new ObjectInputStream(new FileInputStream(storeDir + File.separator + storeFile));
 		Admin userList = (Admin) ois.readObject();

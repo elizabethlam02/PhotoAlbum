@@ -5,44 +5,45 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.PhotoController">
    <children>
       <ListView fx:id="photoList" layoutX="14.0" layoutY="14.0" prefHeight="325.0" prefWidth="348.0" />
-      <Button fx:id="displayPhoto" layoutX="374.0" layoutY="14.0" mnemonicParsing="false" prefHeight="45.0" prefWidth="212.0" text="Display Photo">
+      <Button fx:id="displayPhoto" layoutX="374.0" layoutY="14.0" mnemonicParsing="false" onAction="#displayPhotoAction" prefHeight="45.0" prefWidth="212.0" text="Display Photo">
          <font>
             <Font size="18.0" />
          </font>
       </Button>
-      <Button fx:id="addPhoto" layoutX="374.0" layoutY="70.0" mnemonicParsing="false" prefHeight="45.0" prefWidth="212.0" text="Add Photo">
+      <Button fx:id="addPhoto" layoutX="374.0" layoutY="70.0" mnemonicParsing="false" onAction="#addPhotoAction" prefHeight="45.0" prefWidth="212.0" text="Add Photo">
          <font>
             <Font size="18.0" />
          </font>
       </Button>
-      <Button fx:id="deletePhoto" layoutX="374.0" layoutY="128.0" mnemonicParsing="false" prefHeight="45.0" prefWidth="212.0" text="Delete Photo">
+      <Button fx:id="deletePhoto" layoutX="374.0" layoutY="128.0" mnemonicParsing="false" onAction="#deletePhotoAction" prefHeight="45.0" prefWidth="212.0" text="Delete Photo">
          <font>
             <Font size="18.0" />
          </font>
       </Button>
-      <Button fx:id="renamePhoto" layoutX="374.0" layoutY="185.0" mnemonicParsing="false" prefHeight="45.0" prefWidth="212.0" text="Rename Photo">
+      <Button fx:id="renamePhoto" layoutX="374.0" layoutY="185.0" mnemonicParsing="false" onAction="#recaptionPhotoAction" prefHeight="45.0" prefWidth="212.0" text="Recaption Photo">
          <font>
             <Font size="18.0" />
          </font>
       </Button>
-      <Button fx:id="copyPhoto" layoutX="374.0" layoutY="241.0" mnemonicParsing="false" prefHeight="45.0" prefWidth="212.0" text="Copy Photo">
+      <Button fx:id="copyPhoto" layoutX="374.0" layoutY="241.0" mnemonicParsing="false" onAction="#copyPhotoAction" prefHeight="45.0" prefWidth="212.0" text="Copy Photo">
          <font>
             <Font size="18.0" />
          </font>
       </Button>
-      <Button fx:id="logout" layoutX="516.0" layoutY="357.0" mnemonicParsing="false" prefHeight="28.0" prefWidth="70.0" text="Logout" />
-      <Button fx:id="movePhoto" layoutX="374.0" layoutY="295.0" mnemonicParsing="false" prefHeight="45.0" prefWidth="212.0" text="Move Photo">
+      <Button fx:id="logout" layoutX="516.0" layoutY="357.0" mnemonicParsing="false" onAction="#logOut" prefHeight="28.0" prefWidth="70.0" text="logout" />
+      <Button fx:id="movePhoto" layoutX="374.0" layoutY="295.0" mnemonicParsing="false" onAction="#movePhotoAction" prefHeight="45.0" prefWidth="212.0" text="Move Photo">
          <font>
             <Font size="18.0" />
          </font>
       </Button>
-      <Button fx:id="slideshow" layoutX="82.0" layoutY="341.0" mnemonicParsing="false" prefHeight="45.0" prefWidth="212.0" text="Slideshow">
+      <Button fx:id="slideshow" layoutX="82.0" layoutY="349.0" mnemonicParsing="false" onAction="#slideshowAction" prefHeight="45.0" prefWidth="212.0" text="Slideshow">
          <font>
             <Font size="18.0" />
          </font>
       </Button>
+      <Button fx:id="back" layoutX="436.0" layoutY="357.0" mnemonicParsing="false" onAction="#backAction" prefHeight="28.0" prefWidth="70.0" text="back" />
    </children>
 </AnchorPane>

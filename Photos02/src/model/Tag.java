@@ -1,23 +1,30 @@
 package model;
 
+import java.io.Serializable;
 
 /**
- * 
+ * This class is used to store methods that can be used to manipulate tags.
  * @author Himani Patel
  * @author Elizabeth Lam
  *
  */
 
-public class Tag {
+public class Tag implements Serializable {
 	
+	/**
+	 * Serializable Interface used to store User Data
+	 */
+	private static final long serialVersionUID = 1L;
+	public static final String storeDir = "dat";
+	public static final String storeFile = "users.dat";
 	/**
 	 * Name of the tag
 	 */
-	public String name;
+	private String name;
 	/**
 	 * Value of the Tag
 	 */
-	public String value;
+	private String value;
 	
 	
 	/**
@@ -58,8 +65,9 @@ public class Tag {
 	public void setValue(String value){
 		this.value = value;
 	}
+	
 	/**
-	 * Compares tag values
+	 * equals method of tag
 	 */
 	@Override
 	public boolean equals(Object o) {
@@ -72,12 +80,13 @@ public class Tag {
 		Tag t = (Tag) o;
 		return t.name.equals(this.name) && t.value.equals(this.value);
 	}
+	
 	/**
 	 * toString of Tag
 	 */
 	@Override
 	public String toString() {
-		return name + " , " + value; 
+		return name + " : " + value; 
 	} 
 	
 	

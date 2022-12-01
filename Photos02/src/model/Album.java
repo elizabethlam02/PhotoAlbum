@@ -1,43 +1,77 @@
 package model;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.*;
 /**
  * 
- * 
+ * This class is used to store methods to manipulate albums that hold a list of photos.
  * @author Himani Patel
  * @author Elizabeth Lam
  *
  */
-public class Album {
+public class Album implements Serializable {
+	
+	/**
+	 * Serializable Interface used to store User Data
+	 */
+	private static final long serialVersionUID = 1L;
+	public static final String storeDir = "dat";
+	public static final String storeFile = "users.dat";
 	
 	/**
 	 * is the name of album
 	 */
-	public String AlbumName;
+	private String AlbumName;
 	
 	/**
 	 * is the list of photos in a album
 	 */
-	public ArrayList<Photo> PhotoList;
+	private ArrayList<Photo> photoList;
 	
 	/**
 	 * Current photo in the album
 	 */
-	public Photo currentPhoto;
+	private Photo currentPhoto;
 	
+	/**
+	 * Earliest photo dated in album
+	 */
+	private String earliestDate;
+	/**
+	 *  Latest photo dated in album
+	 */
+	private String latestDate;
 	/**
 	 * Constructor for Album
 	 * @param albumName 
 	 */
 	public Album(String AlbumName) {
 		this.AlbumName = AlbumName; 
-		PhotoList = new ArrayList<Photo>();
+		photoList = new ArrayList<Photo>();
 	}
 	/**
 	 * returns arraylist of Photos
 	 * @return
 	 */
 	public ArrayList<Photo> getAllPhotos(){
-		return PhotoList;
+		return photoList;
+	}
+	/**
+	 * returns the first photo of Album
+	 * @return
+	 */
+	public Photo getFirstPhoto() {
+		if (photoList.size() == 0) {
+			return null;
+		}
+		return photoList.get(0);
 	}
 	/**
 	 * returns current photo
@@ -47,7 +81,7 @@ public class Album {
 		return currentPhoto;
 	}
 	/**
-	 * sets current photo as p
+	 * sets p as current photo
 	 * @param p
 	 */
 	public void setCurrentPhoto(Photo p) {
@@ -73,30 +107,27 @@ public class Album {
 	 * @param p
 	 */
 	public void addPhoto(Photo p) {
-		PhotoList.add(p);
+		photoList.add(p);
 	}
-	/**
-	 * searches for a Photo in the album by given Name
-	 * @param PhotoName
-	 * @return Photo
-	 */
+	/*
 	public Photo searchPhoto(String PhotoName) {
-		for (Photo p: PhotoList) {
-			if (p.PhotoName.equals(PhotoName)) {
+		for (Photo p: photoList) {
+			if (p.photoName.equals(PhotoName)) {
 				return p;
 			}
 		}
 		return null;
 	}
+	*/
 	/**
 	 * Deletes a photo to the Album given the name of Photo
 	 * @param PhotoName
 	 */
 	public void deletePhoto(String PhotoName) {
-		for (Photo p: PhotoList) {
-			if (p.PhotoName.equals(PhotoName)) {
-				int i = PhotoList.indexOf(p);
-				PhotoList.remove(i);
+		for (Photo p: photoList) {
+			if (p.getName().equals(PhotoName)) {
+				int i = photoList.indexOf(p);
+				photoList.remove(i);
 			}
 		}
 	}
@@ -105,11 +136,74 @@ public class Album {
 	 * @param index
 	 */
 	public void deletePhoto(int index) {
-		PhotoList.remove(index);
+		photoList.remove(index);
 	}
+	/**
+	 * Returns String of Date Range
+	 * @return
+	 */
+	public String getDateRange() {
+		return getEarliestDate() + " - \n\t" + getLatestDate();
+	}
+	/**
+	 * Returns String Name of Album Name
+	 */
 	@Override
 	public String toString() {
-		return getAlbumName();
+		return AlbumName;
+	}
+	/**
+	 * Returns details of Album Name
+	 * @return
+	 */
+	public String getDetails() {
+		return ("Album Name: " + AlbumName + "\nNumber of Photos: " + photoList.size() + "\nDate Range: " + getDateRange());
+
+	}
+	
+	/**
+	 * get the date of the earliest photo in the album
+	 * @return the earliest date
+	 */
+	public String getEarliestDate() {
+		LocalDateTime earliestDate = photoList.get(0).getDateTime();
+		for (int i = 1; i < photoList.size(); i++) {
+			if (photoList.get(i).getDateTime().compareTo(earliestDate) < 0) {
+				earliestDate = photoList.get(i).getDateTime();
+			}
+		}
+		return earliestDate.format(DateTimeFormatter.ofPattern("MM/dd/yyyy"));
+	}
+	
+	/**
+	 * get the date of the latest photo in the album
+	 * @return the latest date
+	 */
+	public String getLatestDate() {
+		LocalDateTime latestDate = photoList.get(0).getDateTime();
+		for (int i = 1; i < photoList.size(); i++) {
+			if (photoList.get(i).getDateTime().compareTo(latestDate) > 0) {
+				latestDate = photoList.get(i).getDateTime();
+			}
+		}
+		return latestDate.format(DateTimeFormatter.ofPattern("MM/dd/yyyy"));
+	}
+	/**
+	 * Used to store data of the Album class
+	 * @param Adapp
+	 * @throws IOException
+	 */
+	public static void save(Album Albumapp) throws IOException {
+		ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(storeDir + File.separator + storeFile));
+		oos.writeObject(Albumapp);
+		oos.close();
+	}
+
+	public static User load() throws IOException, ClassNotFoundException {
+		ObjectInputStream ois = new ObjectInputStream(new FileInputStream(storeDir + File.separator + storeFile));
+		User userList = (User) ois.readObject();
+		ois.close();
+		return userList;
 	}
 	
 

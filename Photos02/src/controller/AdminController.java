@@ -1,13 +1,11 @@
 package controller;
 
-import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.io.IOException;
 import java.net.URL;
 import java.util.*;
 
-import application.Main;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -16,14 +14,16 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.control.Alert.AlertType;
 import javafx.stage.Stage;
+import application.Photos;
 import model.*;
 /**
  * 
- *  This is the class that controls the Admin class
+ * This is the class that controls the Admin screen
  * @author Himani Patel
  * @author Elizabeth Lam
  *
  */
+
 public class AdminController implements LogOutController, Initializable {
 	
 	@FXML
@@ -38,19 +38,36 @@ public class AdminController implements LogOutController, Initializable {
 	private Button deleteUser;
 
 	
+	/**
+	 * list of users already in program
+	 */
 	public static ArrayList<String> userlist = new ArrayList<>();
+	
+	/**
+	 * the observable list used to populate the listview
+	 */
 	public ObservableList<String> obsList;
-	public static Admin admin = Main.driver;
-
+	
+	/**
+	 * the admin of the program
+	 */
+	public static Admin admin = Photos.driver;
+	/**
+	 * This method starts the scene and adds the users on listview.
+	 */
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		// TODO Auto-generated method stub
 		if (admin.getUsers().size() == 0) {
+			update();
 		} else {
 			update();
 		}
 
 	}
+	/**
+	 *  This method updates the list view after each manipulation of input by admin user.
+	 */
 	public void update() {
 		userlist.clear();
 		for (int i = 0; i < admin.getUsers().size(); i++) {
@@ -61,27 +78,37 @@ public class AdminController implements LogOutController, Initializable {
 		listview.setItems(obsList);
 		listview.refresh();
 	}
+	/**
+	 * This method will return the user to the Log In screen.
+	 * @param event
+	 * @throws IOException
+	 */
 	public void logOut(ActionEvent event) throws IOException {
 		LogOut(event);
 	}
+	/**
+	 * This method allows the Admin user to create a user
+	 * @param event
+	 * @throws IOException
+	 */
 	public void addUserAction(ActionEvent event) throws IOException {
-		String username = user.getText().toLowerCase().trim();
+		String username = user.getText().trim();
 		if(username.isEmpty() || username == null) {
 			Alert alert = new Alert(AlertType.ERROR);
 			alert.setTitle("WARNING");
 			alert.setContentText("Field is Empty. Please enter a username");
 			alert.showAndWait();
 			return;
-		} else if(admin.userExists(username)) {
-			Alert alert = new Alert(AlertType.ERROR);
-			alert.setTitle("WARNING");
-			alert.setContentText("User already exists");
-			alert.showAndWait();
-			return;
 		} else if (username.equals("admin")) {
 			Alert alert = new Alert(AlertType.ERROR);
 			alert.setTitle("WARNING");
 			alert.setContentText("Admin is not available.");
+			alert.showAndWait();
+			return;
+		} else if(admin.userExists(username)) {
+			Alert alert = new Alert(AlertType.ERROR);
+			alert.setTitle("WARNING");
+			alert.setContentText("User already exists");
 			alert.showAndWait();
 			return;
 		} else {
@@ -93,10 +120,22 @@ public class AdminController implements LogOutController, Initializable {
 			listview.getSelectionModel().select(obsList.indexOf(username));
 			user.clear();
 		}
-		//Admin.save(admin);
+		try {
+			//UserList.getUserList().writeApp();
+			Admin.save(admin);
+		} catch (IOException e1) {
+			// TODO Auto-generated catch block
+		//	System.out.println("File not found");
+			//return;
+			e1.printStackTrace();
+		}
 		
 	}
-	// Delete user from Template SongLib
+	/**
+	 * This method allows the admin user to delete a user.
+	 * @param event
+	 * @throws IOException
+	 */
 	public void deleteUserAction(ActionEvent event) throws IOException {
 		
 		//confirmation dialog 
@@ -107,15 +146,18 @@ public class AdminController implements LogOutController, Initializable {
 		String username = listview.getSelectionModel().getSelectedItem();
 		
 		// You cannot delete the admin user.
-		if (username.toLowerCase().equals("admin")) {
+		if (username.equalsIgnoreCase("admin")) {
 			Alert errorAlert = new Alert(AlertType.ERROR);
 			errorAlert.setTitle("WARNING");
 			errorAlert.setContentText("You cannot delete the Admin user.");
 			errorAlert.showAndWait();
-		} else if (answer.get() == ButtonType.OK) {
+			return;
+		}
+		if (answer.get() == ButtonType.OK) {
 			
 			int index = obsList.indexOf(username);
 			obsList.remove(index);
+			admin.deleteUser(index);
 			
 			if (obsList.size() == 0) {
 				user.setText("");
@@ -129,8 +171,15 @@ public class AdminController implements LogOutController, Initializable {
 				user.setText(curr);
 			}
 		}
-		//Admin.save(admin);
-
+		try {
+			//UserList.getUserList().writeApp();
+			Admin.save(admin);
+		} catch (IOException e1) {
+			// TODO Auto-generated catch block
+		//	System.out.println("File not found");
+			// return;
+			e1.printStackTrace();
+		}
 	}
 
 

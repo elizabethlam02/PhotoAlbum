@@ -1,28 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.control.MenuButton?>
-<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 
-
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="284.0" prefWidth="438.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="283.0" prefWidth="504.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.SearchPhotoController">
    <children>
-      <TextField fx:id="date1" layoutX="14.0" layoutY="31.0" prefHeight="25.0" prefWidth="134.0" promptText="Date 1" />
-      <TextField fx:id="date2" layoutX="152.0" layoutY="31.0" prefHeight="25.0" prefWidth="134.0" promptText="Date 2" />
-      <Button fx:id="searchDateRange" layoutX="289.0" layoutY="31.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="134.0" text="Search by Date Range" />
-      <TextField fx:id="tagType1" layoutX="13.0" layoutY="91.0" prefHeight="25.0" prefWidth="134.0" promptText="Tag Type 1" />
-      <TextField fx:id="tagVal1" layoutX="151.0" layoutY="91.0" prefHeight="25.0" prefWidth="134.0" promptText="Tag Value 1" />
-      <Button fx:id="searchOneTag" layoutX="288.0" layoutY="91.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="134.0" text="Search with One Tag" />
-      <TextField fx:id="tagType2" layoutX="13.0" layoutY="173.0" prefHeight="25.0" prefWidth="134.0" promptText="Tag Type 2" />
-      <TextField fx:id="tagVal2" layoutX="151.0" layoutY="173.0" prefHeight="25.0" prefWidth="134.0" promptText="Tag Value 2" />
-      <Button fx:id="searchTwoTags" layoutX="288.0" layoutY="173.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="134.0" text="Search with Two Tags" />
-      <MenuButton fx:id="andOr" layoutX="112.0" layoutY="129.0" mnemonicParsing="false" text="And/Or">
-        <items>
-          <MenuItem mnemonicParsing="false" text="Action 1" />
-          <MenuItem mnemonicParsing="false" text="Action 2" />
-        </items>
-      </MenuButton>
+      <TextField fx:id="date1" layoutX="14.0" layoutY="31.0" prefHeight="25.0" prefWidth="134.0" promptText="Date 1: MM-DD-YYYY" />
+      <TextField fx:id="date2" layoutX="152.0" layoutY="31.0" prefHeight="25.0" prefWidth="134.0" promptText="Date 2: MM-DD-YYYY" />
+      <Button fx:id="sdate" layoutX="322.0" layoutY="31.0" mnemonicParsing="false" onAction="#searchByDate" prefHeight="26.0" prefWidth="154.0" text="Search by Date Range" />
+      <TextField fx:id="tagt1" layoutX="13.0" layoutY="91.0" prefHeight="25.0" prefWidth="134.0" promptText="Tag Type 1" />
+      <TextField fx:id="tagv1" layoutX="151.0" layoutY="91.0" prefHeight="25.0" prefWidth="134.0" promptText="Tag Value 1" />
+      <Button fx:id="s1tag" layoutX="322.0" layoutY="91.0" mnemonicParsing="false" onAction="#searchByOneTag" prefHeight="26.0" prefWidth="154.0" text="Search with One Tag" />
+      <TextField fx:id="tagt2" layoutX="13.0" layoutY="142.0" prefHeight="25.0" prefWidth="134.0" promptText="Tag Type 2" />
+      <TextField fx:id="tagv2" layoutX="152.0" layoutY="142.0" prefHeight="25.0" prefWidth="134.0" promptText="Tag Value 2" />
+      <Button fx:id="s2tag" layoutX="47.0" layoutY="193.0" mnemonicParsing="false" onAction="#searchByAnd" prefHeight="26.0" prefWidth="154.0" text="Search with Two Tags" />
+      <Button fx:id="back" layoutX="13.0" layoutY="244.0" mnemonicParsing="false" onAction="#backAction" text="back" />
+      <Button fx:id="logout" layoutX="432.0" layoutY="245.0" mnemonicParsing="false" onAction="#logOut" prefHeight="26.0" prefWidth="57.0" text="logout" />
+      <Button fx:id="s2tag1" layoutX="321.0" layoutY="193.0" mnemonicParsing="false" onAction="#searchByOr" prefHeight="26.0" prefWidth="154.0" text="Search with Two Tags" />
+      <Label layoutX="13.0" layoutY="198.0" text="And" />
+      <Label layoutX="296.0" layoutY="198.0" text="Or" />
    </children>
 </AnchorPane>

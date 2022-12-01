@@ -5,10 +5,10 @@
 <?import javafx.scene.layout.AnchorPane?>
 
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="151.0" prefWidth="244.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="151.0" prefWidth="244.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.TagController">>
    <children>
       <TextField fx:id="newTagType" layoutX="48.0" layoutY="25.0" promptText="New Tag Type" />
       <TextField fx:id="newTagVal" layoutX="48.0" layoutY="56.0" promptText="New Tag Value" />
-      <Button fx:id="addTag" layoutX="101.0" layoutY="97.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="95.0" text="Add New Tag" />
+      <Button fx:id="addTag" layoutX="101.0" layoutY="97.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="95.0" text="Add New Tag" onAction = "#addTagAction"/>
    </children>
 </AnchorPane>

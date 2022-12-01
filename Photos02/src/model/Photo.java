@@ -1,115 +1,199 @@
 package model;
+
 import java.io.File;
-import java.util.*;
-import java.util.Calendar;
-import java.util.GregorianCalendar;
-import java.util.Date;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+
+import javafx.scene.image.Image;
 
 /**
- * 
- * 
- * @author Himani Patel
+ * This class implements a photo and stores methods used to manipulate a photo in the photo library.
+ * @author Himani Patel 
  * @author Elizabeth Lam
  *
  */
-public class Photo {
+public class Photo implements Serializable {
 	
 	/**
-	 * name of Photo
+	 * Serializable Interface used to store User Data
 	 */
-	public String PhotoName;
+	private static final long serialVersionUID = 1L;
+	public static final String storeDir = "dat";
+	public static final String storeFile = "users.dat";
 	/**
-	 * File of photo
+	 * Photo Name
 	 */
-	public File photo;
+	private String photoName;
 	/**
-	 * ArrayList of Tags
+	 * Image of the Photo stored
 	 */
-	public ArrayList<Tag> TagList;
+	//Image image;
+	
+	private File file;
 	/**
-	 * photo's caption
+	 * Photo Caption
 	 */
-	public String caption;
+	private String photoCaption;
 	/**
-	 * the calendar in the photo
+	 * File path of photo
 	 */
-	public Calendar cal;
+	private String filepath;
 	/**
-	 * current date of photo
+	 * Photo's Tags
 	 */
-	public Date date;
+	private ArrayList<Tag> tags = new ArrayList<Tag>();
 	/**
-	 * Photo constructor
-	 * @param photo
-	 * @param PhotoName
+	 * Photo's Date
 	 */
-	public Photo(File photo, String PhotoName) {
-		if (photo != null) {
-			this.photo = new File(PhotoName);
-		} else {
-			this.photo = photo;
-		}
-		this.PhotoName = PhotoName;
-		this.TagList = new ArrayList<Tag>();
-		this.caption = null;
-		cal = new GregorianCalendar();
-		cal.set(Calendar.MILLISECOND, 0);
-		this.date = cal.getTime();
+	private LocalDateTime dt = LocalDateTime.now();
+	
+	/**
+	 * Photo Constructors
+	 * @param num
+	 */
+	public Photo (int num) {
+		photoName = "IM_" + num;
+	}
+	
+	public Photo(String name) {
+		photoName = name;
+	}
+	
+	/*
+	public void setImage(Image i) {
+		image = i;
+	}
+	public  Image getImage() {
+		return image;
+	}
+	*/
+	/**
+	 * sets the File to the Photo class
+	 * @param i
+	 */
+	public void setFile(File i) {
+		file = i;
 	}
 	/**
-	 * This method adds/sets a new caption to the photo
-	 * @param caption
+	 * retrieves image file
+	 * @return
 	 */
-	public void addCaption(String caption) {
-		this.caption = caption;
+	public  File getFile() {
+		return file;
 	}
 	/**
-	 * Add a new tag to the photo
-	 * @param name of tag
-	 * @param value of tag
+	 * saves file path for serializable
+	 * @param fp
 	 */
-	public void addTag(String name, String value) {
-		TagList.add(new Tag(name,value));
+	public void setFilePath(String fp) {
+		this.filepath = fp;
 	}
-	public void removeTag(String name, String value){
-		for (int i = 0; i < TagList.size(); i++) {
-			if (TagList.get(i).getName().toLowerCase().equals(name.toLowerCase()) && TagList.get(i).getValue().toLowerCase().equals(value.toLowerCase()) ) {
-				TagList.remove(i);
-			}
-		}
+	/**
+	 * returns string of the file path
+	 * @return
+	 */
+	public String getFilePath() {
+		return filepath;
+	}
+	/**
+	 * returns the name of the photo
+	 * @return
+	 */
+	public String getName() {
+		return photoName;
+	}
+	/**
+	 * sets the caption of the photo object
+	 * @param cap
+	 */
+	public void setCaption(String cap) {
+		photoCaption = cap;
+	}
+	/**
+	 * returns the caption of the photo
+	 * @return
+	 */
+	public String getCaption() {
+		return photoCaption;
+	}
+	/**
+	 * returns photo's tag list
+	 * @return
+	 */
+	public ArrayList<Tag> getTagList() {
+		return tags;
+	}
+	/**
+	 * updates the date time of the photo
+	 */
+	public void updateDateTime() {
+		dt = LocalDateTime.now();
+	}
+	/**
+	 * returns the date time of the photo
+	 * @return
+	 */
+	public LocalDateTime getDateTime() {
+		return dt;
+	}
+	/**
+	 * returns the formatted dated time as a string
+	 * @return
+	 */
+	public String getFormattedDateTime() {
+		return dt.format(DateTimeFormatter.ofPattern("dd-MM-yyyy \n HH:mm:ss"));
 		
 	}
 	/**
-	 * Method checks if tag exists
+	 * returns true if the tag exits
 	 * @param name
 	 * @param value
 	 * @return
 	 */
 	public boolean tagExists(String name, String value) {
-		
-		for (int i = 0; i < TagList.size(); i++) {
-			if (TagList.get(i).getName().toLowerCase().equals(name.toLowerCase()) && TagList.get(i).getValue().toLowerCase().equals(value.toLowerCase()) ) {
+		for(int i = 0; i < tags.size(); i++) {
+			Tag curr = tags.get(i);
+			if(curr.getName().toLowerCase().equals(name.toLowerCase()) && curr.getValue().toLowerCase().equals(value.toLowerCase())) {
 				return true;
 			}
 		}
 		return false;
 	}
 	/**
-	 * returns tag list
-	 * @return
+	 * returns the photo obj as a string
 	 */
-	public ArrayList<Tag> getTagList(){
-		return TagList;
+	public String toString() {
+		return photoName;
 	}
 	/**
-	 * returns Date of Photo
-	 * @return
+	 * saves the data of the photo
+	 * @param photoApp
+	 * @throws IOException
 	 */
-	public Date getData() {
-		return date;
+	public static void save(Photo photoApp) throws IOException {
+		ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(storeDir + File.separator + storeFile));
+		oos.writeObject(photoApp);
+		oos.close();
 	}
-	
-	
-	
+	/**
+	 * loads user data of photo
+	 * @return
+	 * @throws IOException
+	 * @throws ClassNotFoundException
+	 */
+	public static User load() throws IOException, ClassNotFoundException {
+		ObjectInputStream ois = new ObjectInputStream(new FileInputStream(storeDir + File.separator + storeFile));
+		User userList = (User) ois.readObject();
+		ois.close();
+		return userList;
+	}
+
 
 }

@@ -5,23 +5,15 @@
 <?import javafx.scene.control.ListView?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.text.Font?>
 
-
-<AnchorPane fx:id="addTag" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="400.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="400.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.PhotoDisplayController">
    <children>
       <ImageView fx:id="photo" fitHeight="166.0" fitWidth="246.0" layoutX="14.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true" />
       <Label fx:id="photoCaption" layoutX="271.0" layoutY="16.0" prefHeight="166.0" prefWidth="117.0" text="Caption&#10;Date of Photo&#10;" />
       <ListView fx:id="tagList" layoutX="14.0" layoutY="180.0" prefHeight="166.0" prefWidth="372.0" />
-      <Button layoutX="66.0" layoutY="354.0" mnemonicParsing="false" prefHeight="39.0" prefWidth="117.0" text="Add New Tag">
-         <font>
-            <Font size="14.0" />
-         </font>
-      </Button>
-      <Button fx:id="deleteTag" layoutX="216.0" layoutY="354.0" mnemonicParsing="false" prefHeight="39.0" prefWidth="117.0" text="Delete Tag">
-         <font>
-            <Font size="14.0" />
-         </font>
-      </Button>
+      <Button fx:id="addTag" layoutX="72.0" layoutY="360.0" mnemonicParsing="false" onAction="#addTagAction" prefHeight="27.0" prefWidth="117.0" text="Add New Tag" />
+      <Button fx:id="deleteTag" layoutX="200.0" layoutY="360.0" mnemonicParsing="false" onAction="#deleteTagAction" prefHeight="27.0" prefWidth="117.0" text="Delete Tag" />
+      <Button fx:id="logout" layoutX="342.0" layoutY="14.0" mnemonicParsing="false" onAction="#logOut" text="logout" />
+      <Button fx:id="back" layoutX="14.0" layoutY="361.0" mnemonicParsing="false" onAction="#backAction" prefHeight="26.0" prefWidth="45.0" text="back" />
    </children>
 </AnchorPane>
