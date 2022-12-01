@@ -1,5 +1,5 @@
 # PhotoAlbum
-authors:
-\nElizabeth Lam
-\nHimani Patel
-\nThis is a Photo Album program which stores photos in albums using a user file system.
+authors: <br />
+Elizabeth Lam <br />
+Himani Patel <br />
+This is a Photo Album project which stores photos under many albums filed in a user system.
